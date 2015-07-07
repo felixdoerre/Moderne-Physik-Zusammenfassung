@@ -1,0 +1,92 @@
+% das Papierformat zuerst
+\documentclass[a4paper, 11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=0.5cm]{geometry}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{multicol}
+\usepackage{enumitem}
+\setlist{nolistsep}
+
+\title{Algorithmen 2}
+\author{Lucas und Felix}
+\date{WS 2014/2015}
+
+\newcommand{\setR}[0]{\mathbb{R}}
+\newcommand{\setZ}[0]{\mathbb{Z}}
+\newcommand{\setC}[0]{\mathbb{C}}
+\newcommand{\setN}[0]{\mathbb{N}}
+\newcommand{\setQ}[0]{\mathbb{Q}}
+\newcommand{\setK}[0]{\mathbb{K}}
+\newcommand{\setP}[0]{\mathbb{P}}
+\newcommand{\spaceH}[0]{\mathcal{H}}
+\newcommand{\dskal}[0]{\langle\cdot,\cdot\rangle}
+\newcommand{\skal}[2]{\langle #1,#2\rangle}
+\newcommand{\Ex}[1]{{\langle #1\rangle}}
+\renewcommand{\labelenumi}{\theenumi}
+\renewcommand{\labelenumii}{\theenumii}
+\renewcommand{\vec}{\overrightarrow}
+\DeclareMathOperator{\arsinh}{arsinh}
+\DeclareMathOperator{\arcosh}{arcosh}
+\DeclareMathOperator{\artanh}{artanh}
+
+\newcommand{\const}{\mathrm{const.}}
+\newcommand{\md}{\mathrm{d}}
+\newcommand{\poisson}[5]{\sum\limits_{#5=1}^s \frac{\partial #1}{\partial #3_#5}\frac{\partial #2}{\partial #4_#5} - \frac{\partial #1}{\partial #4_#5}\frac{\partial #2}{\partial #3_#5}}
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\ad}[2]{\frac{\md #1}{\md #2}}
+\newcommand{\ihslash}[0]{i\hslash} % TODO fancy i?
+\newcommand{\fracihslash}[1]{\frac{#1}{\ihslash}}
+
+% hier beginnt das Dokument
+\begin{document}
+\shorthandoff{"}
+\begin{multicols}{2}
+\section{Klassische Mechanik}
+Zwangsbedinungen: holonom: "Gleichungen" (holonom-rheonom zeitabhängig, holonom-skleronom nicht explizit zeitabhängig), nicht-holonom: z.~B. Ungleichungen oder diffentielle Einschränkungen.\\
+Kugelkoordinaten: $z=r\cos q_1$, $x=r\sin q_1\cos q_2$, $y=r\sin q_1\sin q_2$\\
+Zylinderkoordinaten: $z=h$, $x=r\cos q_1$, $y=r\sin q_1$\\
+$L=T-V \qquad T\text{: kin. Energie}, V\text{: potentielle Energie}$\\
+\paragraph{Lagrangegleichungen 2. Art} für holonome Zwangsbed.
+\[\ad{}{t} \pd{L}{\dot q_j} - \pd{L}{q_j}=0\]
+\paragraph{Zyklische Koordinate $q_j$:} $\pd{L}{q_j} = 0 \Leftrightarrow \pd{L}{\dot q_j}$ ist Erhaltungsgröße (verallgemeinerter Impuls).
+\paragraph{Rezept:} Zwangsbedingungen formulieren, generalisierte Koordinaten festlegen, $L(q_i, \dot q_i, t)$ bestimmen, Lagrangegleichungen anwenden.
+
+\paragraph{Lagrangegleichungen 1. Art} für nicht-holonome Zwangsbed., d.~h. solche, die nicht ausschl. durch die generalisierten Koordinaten ausgedrückt werden können.
+\[\forall j: \quad \ad{}{t} \pd{L}{\dot q_j} - \pd{L}{q_j} = \sum\limits_i \lambda_i \underbrace{\pd{f_i}{q_j}}_{a_{ij}}\]
+mit $q_j$ generalisierte Koordinaten und $f_i$ verbleibende Zwangsbedingungen.
+
+\paragraph{Hamilton Prinzip}: Die Wirkung wird stationär, also $\delta S = \delta \int\limits_{t_1}^{t_2}L\md t = 0$
+
+\paragraph{Hamilton Mechanik}: $p_i = \pd{L}{\dot q_i}$
+\paragraph{Legendre Transformation} $f(x,y) \to g(u,y)$ mit $u = \pd{f}{x} $, mit $g=f-ux$, um dann die 2 verbleibenden Variablen zu bestimmen kann man $g$ total differenzieren und dann Koeffizientenvergleich mit dem "allgemeinen totalen Differential" machen.
+
+\paragraph{Hamiltongleichungen}
+\[H(q,p,t) = \sum\limits_{i=1}^n\dot q_i(q,p,t)p_i-L[q,\dot q(q,p,t),t]\]
+das führt zu den Gleichungen:
+\[\dot q_i = \pd{H}{q_i} = \{q_i, H\} \qquad \dot p_i = -\pd{H}{q_i} = \{p_i, H\}\]
+\paragraph{Hamilton-Rezept}
+(Wenn skleronom-holonome Zwangsbedingungen, ruhende Koordinaten, konservative Kräfte, dann $H=T+V=E$)
+generalisierte Koordinaten wählen, $L = T - V$ aufstellen, $p_i = \pd{L}{\dot q_i}$ berechnen, $H=\sum\limits_{i=1}^n\dot q_i(q,p,t)p_i-L[q,\dot q(q,p,t),t]$, $\dot q_i$ ersetzen (aus dem Impuls).
+\[\dot q_i = \pd{H}{q_i} \qquad \dot p_i = -\pd{H}{q_i} \qquad \text{aufstellen und zusammenfassen}\]
+\[\ad{H}{t}=\pd{H}{t} =-\pd{L}{t}\]
+
+\paragraph{Poisson-Klammern}
+\[\{f,g\}_{\vec q, \vec p} = \sum\limits_{j=1}^S \left(\frac{\partial f}{\partial q_j}\frac{\partial g}{\partial p_j} - \frac{\partial f}{\partial p_j}\frac{\partial g}{\partial q_j} \right)\]
+
+\[\ad{f}{t} = \{f,H\} + \pd{f}{t}\]
+\[\{c_1f_1+c_2f_2,g\} = c_1\{f_1,g\} + c_2\{f_2,g\}, \qquad c_1,c_2=\const\]
+Antisymmetrie: $\{f,g\} = -\{g,f\} \Rightarrow \{f,f\}=0$\\
+Nullelement: $\{c,f\} = 0 \qquad f=f(\vec q, \vec p), c=\const$\\
+Produktregel: $\{f,gh\} = g\{f,h\} + \{f,g\}h$\\
+Jacobi-Identität: $\{f,\{g,h\}\} + \{g,\{h,f\}\} + \{h,\{f,g\}\} = 0$\\
+$\{q_i,q_j\} = \{p_i,p_j\} = 0 \qquad \{p_i,q_j\} = \delta_{ij}$
+\section{Relativitätstheorie}
+\section{Quantenmechanik}
+
+
+\end{multicols}
+\end{document}
